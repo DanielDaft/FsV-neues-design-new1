@@ -9222,7 +9222,7 @@ function renderCardView(student) {
     'checkliste': '#10B981'             // Türkis
   };
   
-  html += '<div class="categories-container" id="masonry-container" data-masonry="true">';
+  html += '<div class="categories-container">';
   
   categoryEntries.forEach(([categoryKey, category]) => {
     const color = categoryColors[categoryKey] || '#6B7280'; // Fallback: Grau
@@ -9232,22 +9232,6 @@ function renderCardView(student) {
   html += '</div>';
   
   html += '</div>';
-  
-  // GARANTIERTE MASONRY-AUSFÜHRUNG
-  setTimeout(() => {
-    console.log('Masonry wird ausgeführt...');
-    initCleanMasonry();
-  }, 50);
-  
-  setTimeout(() => {
-    console.log('Masonry Backup-Ausführung...');
-    initCleanMasonry();
-  }, 500);
-  
-  setTimeout(() => {
-    console.log('Masonry Final-Ausführung...');
-    initCleanMasonry();
-  }, 1000);
   
   return html;
 }
