@@ -9787,8 +9787,9 @@ function initCleanMasonry() {
   if (containerWidth < 1024) columns = 2;
   if (containerWidth < 768) columns = 1;
   
-  const gap = 20;
-  const columnWidth = (containerWidth - (gap * (columns - 1))) / columns;
+  const horizontalGap = 20;  // Horizontaler Abstand zwischen Spalten
+  const verticalGap = 0;     // Kein vertikaler Abstand
+  const columnWidth = (containerWidth - (horizontalGap * (columns - 1))) / columns;
   
   // Spalten-Höhen-Array
   const columnHeights = new Array(columns).fill(0);
@@ -9808,7 +9809,7 @@ function initCleanMasonry() {
     const isWide = item.dataset.category === 'grundfahraufgaben' && columns >= 2;
     if (isWide) {
       // Finde beste 2-Spalten Position
-      let minHeight = columnHeights[0] + columnHeights[1];
+      let minHeight = Infinity;
       for (let i = 0; i < columns - 1; i++) {
         const height = Math.max(columnHeights[i], columnHeights[i + 1]);
         if (height < minHeight) {
@@ -9816,7 +9817,7 @@ function initCleanMasonry() {
           targetColumn = i;
         }
       }
-      itemWidth = (columnWidth * 2) + gap;
+      itemWidth = (columnWidth * 2) + horizontalGap;
     } else {
       // Finde kürzeste Spalte
       let minHeight = columnHeights[0];
@@ -9829,7 +9830,7 @@ function initCleanMasonry() {
     }
     
     // Position berechnen
-    const x = targetColumn * (columnWidth + gap);
+    const x = targetColumn * (columnWidth + horizontalGap);
     const y = isWide ? Math.max(columnHeights[targetColumn], columnHeights[targetColumn + 1]) : columnHeights[targetColumn];
     
     // Item positionieren
@@ -9839,12 +9840,12 @@ function initCleanMasonry() {
     item.style.width = itemWidth + 'px';
     item.style.visibility = 'visible';
     
-    // Spalten aktualisieren
+    // Spalten aktualisieren - OHNE vertikalen Gap
     if (isWide) {
-      columnHeights[targetColumn] = y + itemHeight + gap;
-      columnHeights[targetColumn + 1] = y + itemHeight + gap;
+      columnHeights[targetColumn] = y + itemHeight;
+      columnHeights[targetColumn + 1] = y + itemHeight;
     } else {
-      columnHeights[targetColumn] = y + itemHeight + gap;
+      columnHeights[targetColumn] = y + itemHeight;
     }
   });
   
