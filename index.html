@@ -9814,9 +9814,20 @@ function initCleanMasonry() {
   const columnHeights = new Array(columns).fill(0);
   
   // Alle Items positionieren
-  items.forEach((item) => {
+  items.forEach((item, index) => {
     const itemHeight = item.offsetHeight;
-    if (itemHeight === 0) return;  // Überspringe leere Items
+    console.log(`🔍 Masonry Debug - Item ${index}:`, {
+      element: item,
+      offsetHeight: itemHeight,
+      scrollHeight: item.scrollHeight,
+      classList: item.classList.toString(),
+      isVisible: item.style.display !== 'none',
+      currentClass: document.body.getAttribute('data-current-class')
+    });
+    if (itemHeight === 0) {
+      console.warn(`⚠️ Item ${index} hat Höhe 0 - wird übersprungen!`, item);
+      return;  // Überspringe leere Items
+    }
     let targetColumn = 0;
     let itemWidth = columnWidth;
     
