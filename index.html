@@ -9993,11 +9993,7 @@ function initCleanMasonry() {
   console.log(`Masonry: Fertig! Container-Höhe: ${maxHeight}px, ${columns} Spalten`);
 }
 
-// Resize-Handler
-window.addEventListener('resize', () => {
-  clearTimeout(window.masonryTimeout);
-  window.masonryTimeout = setTimeout(initCleanMasonry, 300);
-});
+// Resize handler for masonry removed
 
 
 
