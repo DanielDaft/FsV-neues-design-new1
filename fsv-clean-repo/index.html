@@ -9165,9 +9165,11 @@ function renderCardView(student) {
   
   html += '</div>';
   
-  // Masonry-Layout initialisieren
-  setTimeout(() => initCleanMasonry(), 50);
+  // Masonry-Layout initialisieren - mehrere Versuche für Klasse B
+  setTimeout(() => initCleanMasonry(), 100);
   setTimeout(() => initCleanMasonry(), 300);
+  setTimeout(() => initCleanMasonry(), 600);
+  setTimeout(() => initCleanMasonry(), 1000);
   
   return html;
 }
@@ -9776,10 +9778,18 @@ function getProgressItemDisplay(status) {
 // 🎯 SAUBERES MASONRY-LAYOUT - FUNKTIONIERT GARANTIERT
 function initCleanMasonry() {
   const container = document.getElementById('masonry-container');
-  if (!container) return;
+  if (!container) {
+    console.log('Masonry: Container nicht gefunden');
+    return;
+  }
   
   const items = Array.from(container.querySelectorAll('.card-category'));
-  if (items.length === 0) return;
+  if (items.length === 0) {
+    console.log('Masonry: Keine Items gefunden');
+    return;
+  }
+  
+  console.log(`Masonry: Starte mit ${items.length} Items für Klasse ${currentClass}`);
   
   // Responsive Spalten
   const containerWidth = container.offsetWidth;
@@ -9796,12 +9806,21 @@ function initCleanMasonry() {
   
   // Alle Items positionieren
   items.forEach((item, index) => {
-    // Sichtbarkeit für Messung
+    // Sichtbarkeit für Messung - WICHTIG für korrekte Höhenmessung
     item.style.visibility = 'hidden';
     item.style.position = 'static';
     item.style.display = 'flex';
+    item.style.width = '100%';
+    
+    // Force Reflow für korrekte Höhenmessung
+    void item.offsetHeight;
     
     const itemHeight = item.offsetHeight;
+    
+    if (itemHeight === 0) {
+      console.warn(`Masonry: Item ${index} hat Höhe 0, überspringe`, item.dataset.category);
+      return;
+    }
     let targetColumn = 0;
     let itemWidth = columnWidth;
     
@@ -9850,7 +9869,10 @@ function initCleanMasonry() {
   });
   
   // Container-Höhe
-  container.style.height = Math.max(...columnHeights) + 'px';
+  const maxHeight = Math.max(...columnHeights);
+  container.style.height = maxHeight + 'px';
+  
+  console.log(`Masonry: Fertig! Container-Höhe: ${maxHeight}px, ${columns} Spalten`);
 }
 
 // Resize-Handler
