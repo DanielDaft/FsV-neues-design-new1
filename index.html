@@ -4265,6 +4265,90 @@ function getTrainingCategoriesForClass(className) {
     };
   }
   
+  if (className === 'B') {
+    // B-Klasse (PKW) - EXPLIZIT DEFINIERT WIE A-KLASSEN
+    return {
+      "grundstufe": {
+        "name": "Grundstufe",
+        "subtitle": "Einweisung und Bedienung",
+        "color": "#F59E0B",
+        "sections": TRAINING_CATEGORIES.grundstufe.sections
+      },
+      "aufbaustufe": {
+        "name": "Aufbaustufe",
+        "subtitle": "Umweltschonendes, vorausschauendes Fahren, Blickschulung",
+        "color": "#F97316",
+        "sections": TRAINING_CATEGORIES.aufbaustufe.sections
+      },
+      "leistungsstufe": {
+        "name": "Leistungsstufe",
+        "subtitle": "Schwierige Verkehrssituationen, umweltschonendes, vorausschauendes Fahren, Blickschulung/Bremsbereitschaft",
+        "color": "#EF4444",
+        "sections": TRAINING_CATEGORIES.leistungsstufe.sections
+      },
+      "grundfahraufgaben": {
+        "name": "Grundfahraufgaben",
+        "color": "#F59E0B",
+        "sections": TRAINING_CATEGORIES.grundfahraufgaben.sections
+      },
+      "uberlandfahrten": {
+        "name": "Überlandfahrten",
+        "subtitle": "Sicheres und umweltschonendes Fahren außerhalb geschlossener Ortschaften",
+        "color": "#EAB308",
+        "sections": TRAINING_CATEGORIES.uberlandfahrten.sections
+      },
+      "autobahn": {
+        "name": "Autobahnfahrten",
+        "subtitle": "Sicheres Fahren auf Autobahnen und Kraftfahrstraßen",
+        "color": "#EAB308",
+        "sections": TRAINING_CATEGORIES.autobahn.sections
+      },
+      "dammerung_dunkelheit": {
+        "name": "Dämmerung/Dunkelheit",
+        "subtitle": "Fahren bei schlechten Sichtverhältnissen",
+        "color": "#EAB308",
+        "sections": TRAINING_CATEGORIES.dammerung_dunkelheit.sections
+      },
+      "reife_teststufe": {
+        "name": "Reife- und Teststufe",
+        "subtitle": "Vorbereitung auf die praktische Prüfung",
+        "color": "#22C55E",
+        "sections": TRAINING_CATEGORIES.reife_teststufe.sections
+      },
+      "situative_bausteine": {
+        "name": "Situative Bausteine",
+        "subtitle": "Praktische Verkehrssituationen",
+        "color": "#60A5FA",
+        "sections": TRAINING_CATEGORIES.situative_bausteine.sections
+      },
+      "fahrerassistenzsysteme": {
+        "name": "Fahrerassistenzsysteme",
+        "color": "#06B6D4",
+        "sections": TRAINING_CATEGORIES.fahrerassistenzsysteme.sections
+      },
+      "beim_fahrer": {
+        "name": "Checkliste beim Fahrer",
+        "color": "#06B6D4",
+        "sections": TRAINING_CATEGORIES.beim_fahrer.sections
+      },
+      "heizung_luftung": {
+        "name": "Heizung & Lüftung",
+        "color": "#06B6D4",
+        "sections": TRAINING_CATEGORIES.heizung_luftung.sections
+      },
+      "betriebs_verkehrssicherheit": {
+        "name": "Betriebs- und Verkehrssicherheit",
+        "color": "#06B6D4",
+        "sections": TRAINING_CATEGORIES.betriebs_verkehrssicherheit.sections
+      },
+      "witterung": {
+        "name": "Witterung",
+        "color": "#06B6D4",
+        "sections": TRAINING_CATEGORIES.witterung.sections
+      }
+    };
+  }
+  
   if (className === 'A' || className === 'A1' || className === 'A2') {
     // A-Klassen (Motorrad) mit exakten Kategorien aus Ausbildungsdiagramm
     return {
