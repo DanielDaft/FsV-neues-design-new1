@@ -9154,7 +9154,7 @@ function renderCardView(student) {
     'checkliste': '#10B981'             // Türkis
   };
   
-  html += '<div class="categories-container">';
+  html += '<div class="categories-container" id="masonry-container">';
   
   categoryEntries.forEach(([categoryKey, category]) => {
     const color = categoryColors[categoryKey] || '#6B7280'; // Fallback: Grau
@@ -9164,6 +9164,10 @@ function renderCardView(student) {
   html += '</div>';
   
   html += '</div>';
+  
+  // Masonry-Layout initialisieren
+  setTimeout(() => initCleanMasonry(), 50);
+  setTimeout(() => initCleanMasonry(), 300);
   
   return html;
 }
