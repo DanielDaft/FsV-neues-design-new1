@@ -9241,7 +9241,7 @@ function renderCardView(student) {
     'checkliste': '#10B981'             // Türkis
   };
   
-  html += '<div class="categories-container">';
+  html += '<div class="categories-container" id="masonry-container">';
   
   categoryEntries.forEach(([categoryKey, category]) => {
     const color = categoryColors[categoryKey] || '#6B7280'; // Fallback: Grau
