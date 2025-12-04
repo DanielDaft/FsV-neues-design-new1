@@ -9812,6 +9812,10 @@ function initCleanMasonry() {
     return;
   }
   
+  // FORCE REFLOW: Lese eine Layout-Property um Browser zu zwingen, Layout neu zu berechnen
+  void container.offsetHeight;
+  void document.body.offsetHeight;
+  
   // Responsive Spalten
   let containerWidth = container.offsetWidth;
   
