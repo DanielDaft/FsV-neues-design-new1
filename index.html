@@ -9794,11 +9794,21 @@ function getProgressItemDisplay(status) {
 }
 // Masonry-Layout für kompaktes Stapeln ohne vertikale Lücken
 function initCleanMasonry() {
+  console.log('🚀 initCleanMasonry aufgerufen für Klasse:', document.body.getAttribute('data-current-class'));
+  
   const container = document.getElementById('masonry-container');
-  if (!container) return;
+  console.log('📦 Container gefunden?', !!container, container);
+  if (!container) {
+    console.warn('❌ Masonry Container nicht gefunden!');
+    return;
+  }
   
   const items = Array.from(container.querySelectorAll('.card-category'));
-  if (items.length === 0) return;
+  console.log('📋 Anzahl Items gefunden:', items.length, items);
+  if (items.length === 0) {
+    console.warn('❌ Keine .card-category Items im Container gefunden!');
+    return;
+  }
   
   // Responsive Spalten
   const containerWidth = container.offsetWidth;
