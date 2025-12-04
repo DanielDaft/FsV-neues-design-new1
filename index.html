@@ -9813,7 +9813,16 @@ function initCleanMasonry() {
   }
   
   // Responsive Spalten
-  const containerWidth = container.offsetWidth;
+  let containerWidth = container.offsetWidth;
+  
+  // FALLBACK: Wenn Container noch keine Breite hat (Timing-Problem bei Klasse B)
+  if (containerWidth === 0) {
+    // Verwende Breite des Parent-Containers oder Browser-Breite
+    const parentContainer = container.closest('.container');
+    containerWidth = parentContainer ? parentContainer.offsetWidth : window.innerWidth - 40;
+    console.warn(`⚠️ Container hatte Breite 0, verwende Fallback: ${containerWidth}px`);
+  }
+  
   let columns = 3;
   if (containerWidth < 1024) columns = 2;
   if (containerWidth < 768) columns = 1;
