@@ -6240,6 +6240,12 @@ function renderStudentDetail(studentId) {
     setupCardViewEventDelegation(student.id);
   }, 100);
   
+  // MASONRY FÜR KARTENANSICHT INITIALISIEREN
+  setTimeout(() => initCleanMasonry(), 150);
+  setTimeout(() => initCleanMasonry(), 400);
+  setTimeout(() => initCleanMasonry(), 800);
+  setTimeout(() => initCleanMasonry(), 1200);
+  
   // Theme Toggle nach dem Rendering wieder einfügen
   setTimeout(() => {
     ThemeManager.createToggleButton();
@@ -9165,12 +9171,6 @@ function renderCardView(student) {
   
   html += '</div>';
   
-  // Masonry-Layout initialisieren - mehrere Versuche für Klasse B
-  setTimeout(() => initCleanMasonry(), 100);
-  setTimeout(() => initCleanMasonry(), 300);
-  setTimeout(() => initCleanMasonry(), 600);
-  setTimeout(() => initCleanMasonry(), 1000);
-  
   return html;
 }
 
@@ -9667,6 +9667,12 @@ function refreshCardView(studentId) {
     
     // Event Delegation für dynamisch erstellte Kreise einrichten
     setupCardViewEventDelegation(studentId);
+    
+    // MASONRY NACH DOM-UPDATE INITIALISIEREN
+    setTimeout(() => initCleanMasonry(), 50);
+    setTimeout(() => initCleanMasonry(), 200);
+    setTimeout(() => initCleanMasonry(), 500);
+    setTimeout(() => initCleanMasonry(), 1000);
   }
 }
 
