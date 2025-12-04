@@ -9824,7 +9824,9 @@ function initCleanMasonry() {
       offsetHeight: item.offsetHeight,
       scrollHeight: item.scrollHeight,
       clientHeight: item.clientHeight,
-      hasChildren: item.children.length
+      hasChildren: item.children.length,
+      innerHTML_length: item.innerHTML.length,
+      innerHTML_preview: item.innerHTML.substring(0, 200)
     });
     
     // NEUE MESS-STRATEGIE: Item sichtbar machen und Höhe direkt messen
