@@ -9094,6 +9094,9 @@ function renderCategoryHeader(studentId, category, key, percentage, treatedItems
       // WICHTIG: B verwendet jetzt die C-Funktion (funktioniert perfekt)
       // Die alte renderBCategoryHeader bleibt im Code, wird aber nicht mehr verwendet
       return renderCCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
+    case 'B2':
+      // B2 ist eine Kopie von B - verwendet auch die C-Funktion zum Testen
+      return renderCCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
     case 'A':
     case 'A1': 
     case 'A2':
