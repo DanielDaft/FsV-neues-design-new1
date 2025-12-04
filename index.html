@@ -9184,8 +9184,8 @@ function renderCategoryHeader(studentId, category, key, percentage, treatedItems
     case 'CE':
       return renderCECategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
     default:
-      // Fallback für unbekannte Klassen - verwende B-Logik
-      return renderBCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
+      // Fallback für unbekannte Klassen - verwende C-Logik
+      return renderCCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
   }
 }
 
