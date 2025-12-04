@@ -9812,11 +9812,13 @@ function initCleanMasonry() {
   
   // Alle Items positionieren
   items.forEach((item, index) => {
-    // Sichtbarkeit für Messung - WICHTIG für korrekte Höhenmessung
-    item.style.visibility = 'hidden';
-    item.style.position = 'static';
+    // NEUE MESS-STRATEGIE: Item sichtbar machen und Höhe direkt messen
+    item.style.position = 'relative';  // Relative statt static für bessere Messung
+    item.style.visibility = 'visible';
     item.style.display = 'flex';
-    item.style.width = '100%';
+    item.style.width = columnWidth + 'px';
+    item.style.left = '0';
+    item.style.top = '0';
     
     // Force Reflow für korrekte Höhenmessung
     void item.offsetHeight;
@@ -9824,7 +9826,7 @@ function initCleanMasonry() {
     const itemHeight = item.offsetHeight;
     
     if (itemHeight === 0) {
-      console.warn(`Masonry: Item ${index} hat Höhe 0, überspringe`, item.dataset.category);
+      console.warn(`Masonry: Item ${index} (${item.dataset.category}) hat Höhe 0, überspringe`);
       return;
     }
     let targetColumn = 0;
