@@ -9869,7 +9869,10 @@ function initCleanMasonry() {
   });
   
   // Container-Höhe
-  container.style.height = Math.max(...columnHeights) + 'px';
+  const maxHeight = Math.max(...columnHeights);
+  container.style.height = maxHeight + 'px';
+  
+  console.log(`Masonry: Fertig! Container-Höhe: ${maxHeight}px, ${columns} Spalten`);
 }
 
 // Resize-Handler
