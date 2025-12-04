@@ -9812,13 +9812,28 @@ function initCleanMasonry() {
   
   // Alle Items positionieren
   items.forEach((item, index) => {
+    // DEBUG: Mehr Informationen sammeln
+    const computedStyle = window.getComputedStyle(item);
+    const displayValue = computedStyle.display;
+    const visibilityValue = computedStyle.visibility;
+    
+    console.log(`Item ${index} (${item.dataset.category}):`, {
+      display: displayValue,
+      visibility: visibilityValue,
+      offsetHeight: item.offsetHeight,
+      scrollHeight: item.scrollHeight,
+      clientHeight: item.clientHeight,
+      hasChildren: item.children.length
+    });
+    
     // NEUE MESS-STRATEGIE: Item sichtbar machen und Höhe direkt messen
-    item.style.position = 'relative';  // Relative statt static für bessere Messung
+    item.style.position = 'relative';
     item.style.visibility = 'visible';
     item.style.display = 'flex';
     item.style.width = columnWidth + 'px';
     item.style.left = '0';
     item.style.top = '0';
+    item.style.opacity = '1';
     
     // Force Reflow für korrekte Höhenmessung
     void item.offsetHeight;
@@ -9826,7 +9841,7 @@ function initCleanMasonry() {
     const itemHeight = item.offsetHeight;
     
     if (itemHeight === 0) {
-      console.warn(`Masonry: Item ${index} (${item.dataset.category}) hat Höhe 0, überspringe`);
+      console.warn(`Masonry: Item ${index} (${item.dataset.category}) hat Höhe 0, überspringe - scrollHeight: ${item.scrollHeight}`);
       return;
     }
     let targetColumn = 0;
