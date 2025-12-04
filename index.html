@@ -9825,19 +9825,7 @@ function initCleanMasonry() {
   
   // Alle Items positionieren
   items.forEach((item, index) => {
-    const itemHeight = item.offsetHeight;
-    console.log(`🔍 Masonry Debug - Item ${index}:`, {
-      element: item,
-      offsetHeight: itemHeight,
-      scrollHeight: item.scrollHeight,
-      classList: item.classList.toString(),
-      isVisible: item.style.display !== 'none',
-      currentClass: document.body.getAttribute('data-current-class')
-    });
-    if (itemHeight === 0) {
-      console.warn(`⚠️ Item ${index} hat Höhe 0 - wird übersprungen!`, item);
-      return;  // Überspringe leere Items
-    }
+    // WICHTIG: Setze Width ZUERST, damit das Item eine Höhe bekommen kann!
     let targetColumn = 0;
     let itemWidth = columnWidth;
     
