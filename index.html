@@ -6325,17 +6325,13 @@ function renderStudentDetail(studentId) {
   }, 100);
   
   // Masonry für kompaktes Layout ohne vertikale Lücken
-  // Für Klasse B extra Timeouts, weil B langsamer rendert
-  if (currentClass === 'B') {
+  // Warte bis alle Bilder/Inhalte geladen sind, dann Masonry
+  requestAnimationFrame(() => {
+    setTimeout(() => initCleanMasonry(), 50);
     setTimeout(() => initCleanMasonry(), 200);
-    setTimeout(() => initCleanMasonry(), 600);
-    setTimeout(() => initCleanMasonry(), 1200);
-    setTimeout(() => initCleanMasonry(), 2000);
-  } else {
-    setTimeout(() => initCleanMasonry(), 100);
-    setTimeout(() => initCleanMasonry(), 400);
-    setTimeout(() => initCleanMasonry(), 800);
-  }
+    setTimeout(() => initCleanMasonry(), 500);
+    setTimeout(() => initCleanMasonry(), 1000);
+  });
   
   // Theme Toggle nach dem Rendering wieder einfügen
   setTimeout(() => {
