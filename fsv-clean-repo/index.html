@@ -1773,7 +1773,11 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 }
 /* CSS GRID BASIS + JAVASCRIPT MASONRY */
 .categories-container {
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  column-gap: 20px;
+  row-gap: 0px;
+  align-items: start;
   width: 100%;
   margin: 20px 0;
   padding: 0;
@@ -1787,7 +1791,6 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   border-left-style: solid;
   overflow: visible;
   border: none;
-  position: absolute;
   height: fit-content;
   box-sizing: border-box;
   display: flex;
@@ -1800,6 +1803,19 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 .card-category:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .categories-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .categories-container {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* ENTFERNT - Ersetzt durch Grid-System
@@ -6324,11 +6340,7 @@ function renderStudentDetail(studentId) {
     setupCardViewEventDelegation(student.id);
   }, 100);
   
-  // MASONRY FÜR KARTENANSICHT INITIALISIEREN
-  setTimeout(() => initCleanMasonry(), 150);
-  setTimeout(() => initCleanMasonry(), 400);
-  setTimeout(() => initCleanMasonry(), 800);
-  setTimeout(() => initCleanMasonry(), 1200);
+  // Masonry initialization removed
   
   // Theme Toggle nach dem Rendering wieder einfügen
   setTimeout(() => {
@@ -9245,7 +9257,7 @@ function renderCardView(student) {
     'checkliste': '#10B981'             // Türkis
   };
   
-  html += '<div class="categories-container" id="masonry-container">';
+  html += '<div class="categories-container">';
   
   categoryEntries.forEach(([categoryKey, category]) => {
     const color = categoryColors[categoryKey] || '#6B7280'; // Fallback: Grau
@@ -9753,11 +9765,7 @@ function refreshCardView(studentId) {
     // Event Delegation für dynamisch erstellte Kreise einrichten
     setupCardViewEventDelegation(studentId);
     
-    // MASONRY NACH DOM-UPDATE INITIALISIEREN
-    setTimeout(() => initCleanMasonry(), 50);
-    setTimeout(() => initCleanMasonry(), 200);
-    setTimeout(() => initCleanMasonry(), 500);
-    setTimeout(() => initCleanMasonry(), 1000);
+    // Masonry initialization removed
   }
 }
 
@@ -9985,11 +9993,7 @@ function initCleanMasonry() {
   console.log(`Masonry: Fertig! Container-Höhe: ${maxHeight}px, ${columns} Spalten`);
 }
 
-// Resize-Handler
-window.addEventListener('resize', () => {
-  clearTimeout(window.masonryTimeout);
-  window.masonryTimeout = setTimeout(initCleanMasonry, 300);
-});
+// Resize handler for masonry removed
 
 
 
