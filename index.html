@@ -9165,9 +9165,11 @@ function renderCardView(student) {
   
   html += '</div>';
   
-  // Masonry-Layout initialisieren
-  setTimeout(() => initCleanMasonry(), 50);
+  // Masonry-Layout initialisieren - mehrere Versuche für Klasse B
+  setTimeout(() => initCleanMasonry(), 100);
   setTimeout(() => initCleanMasonry(), 300);
+  setTimeout(() => initCleanMasonry(), 600);
+  setTimeout(() => initCleanMasonry(), 1000);
   
   return html;
 }
