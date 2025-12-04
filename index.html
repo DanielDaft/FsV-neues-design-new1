@@ -9817,10 +9817,20 @@ function initCleanMasonry() {
   
   // FALLBACK: Wenn Container noch keine Breite hat (Timing-Problem bei Klasse B)
   if (containerWidth === 0) {
-    // Verwende Breite des Parent-Containers oder Browser-Breite
+    // Versuche Parent-Container
     const parentContainer = container.closest('.container');
-    containerWidth = parentContainer ? parentContainer.offsetWidth : window.innerWidth - 40;
-    console.warn(`⚠️ Container hatte Breite 0, verwende Fallback: ${containerWidth}px`);
+    const parentWidth = parentContainer ? parentContainer.offsetWidth : 0;
+    
+    // Wenn auch Parent keine Breite hat, verwende Browser-Breite oder Standard
+    if (parentWidth > 0) {
+      containerWidth = parentWidth;
+      console.warn(`⚠️ Container hatte Breite 0, verwende Parent-Breite: ${containerWidth}px`);
+    } else {
+      // Absoluter Fallback: Verwende Browser-Breite minus Padding
+      const browserWidth = window.innerWidth || document.documentElement.clientWidth || 1200;
+      containerWidth = Math.max(browserWidth - 80, 1000); // Min 1000px
+      console.warn(`⚠️ Gesamte Hierarchie hat Breite 0, verwende Browser-Breite: ${containerWidth}px`);
+    }
   }
   
   let columns = 3;
