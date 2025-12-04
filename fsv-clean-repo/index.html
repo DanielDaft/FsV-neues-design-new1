@@ -1773,11 +1773,7 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 }
 /* CSS GRID BASIS + JAVASCRIPT MASONRY */
 .categories-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 0;
-  align-items: start;
+  position: relative;
   width: 100%;
   margin: 20px 0;
   padding: 0;
@@ -1791,6 +1787,7 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   border-left-style: solid;
   overflow: visible;
   border: none;
+  position: absolute;
   height: fit-content;
   box-sizing: border-box;
   display: flex;
@@ -1798,38 +1795,11 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   margin: 0;
-  margin-bottom: 0 !important;
 }
 
 .card-category:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* 2-Spalten-Breite für Grundfahraufgaben */
-.card-category[data-category="grundfahraufgaben"] { 
-  grid-column: span 2;
-}
-
-/* Responsive Grid */
-@media (max-width: 1024px) {
-  .categories-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  
-  .card-category[data-category="grundfahraufgaben"] { 
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 768px) {
-  .categories-container {
-    grid-template-columns: 1fr;
-  }
-  
-  .card-category[data-category="grundfahraufgaben"] { 
-    grid-column: span 1;
-  }
 }
 
 /* ENTFERNT - Ersetzt durch Grid-System
@@ -9184,7 +9154,7 @@ function renderCardView(student) {
     'checkliste': '#10B981'             // Türkis
   };
   
-  html += '<div class="categories-container">';
+  html += '<div class="categories-container" id="masonry-container">';
   
   categoryEntries.forEach(([categoryKey, category]) => {
     const color = categoryColors[categoryKey] || '#6B7280'; // Fallback: Grau
@@ -9194,6 +9164,10 @@ function renderCardView(student) {
   html += '</div>';
   
   html += '</div>';
+  
+  // Masonry-Layout initialisieren
+  setTimeout(() => initCleanMasonry(), 50);
+  setTimeout(() => initCleanMasonry(), 300);
   
   return html;
 }
@@ -9813,8 +9787,9 @@ function initCleanMasonry() {
   if (containerWidth < 1024) columns = 2;
   if (containerWidth < 768) columns = 1;
   
-  const gap = 20;
-  const columnWidth = (containerWidth - (gap * (columns - 1))) / columns;
+  const horizontalGap = 20;  // Horizontaler Abstand zwischen Spalten
+  const verticalGap = 0;     // Kein vertikaler Abstand
+  const columnWidth = (containerWidth - (horizontalGap * (columns - 1))) / columns;
   
   // Spalten-Höhen-Array
   const columnHeights = new Array(columns).fill(0);
@@ -9834,7 +9809,7 @@ function initCleanMasonry() {
     const isWide = item.dataset.category === 'grundfahraufgaben' && columns >= 2;
     if (isWide) {
       // Finde beste 2-Spalten Position
-      let minHeight = columnHeights[0] + columnHeights[1];
+      let minHeight = Infinity;
       for (let i = 0; i < columns - 1; i++) {
         const height = Math.max(columnHeights[i], columnHeights[i + 1]);
         if (height < minHeight) {
@@ -9842,7 +9817,7 @@ function initCleanMasonry() {
           targetColumn = i;
         }
       }
-      itemWidth = (columnWidth * 2) + gap;
+      itemWidth = (columnWidth * 2) + horizontalGap;
     } else {
       // Finde kürzeste Spalte
       let minHeight = columnHeights[0];
@@ -9855,7 +9830,7 @@ function initCleanMasonry() {
     }
     
     // Position berechnen
-    const x = targetColumn * (columnWidth + gap);
+    const x = targetColumn * (columnWidth + horizontalGap);
     const y = isWide ? Math.max(columnHeights[targetColumn], columnHeights[targetColumn + 1]) : columnHeights[targetColumn];
     
     // Item positionieren
@@ -9865,12 +9840,12 @@ function initCleanMasonry() {
     item.style.width = itemWidth + 'px';
     item.style.visibility = 'visible';
     
-    // Spalten aktualisieren
+    // Spalten aktualisieren - OHNE vertikalen Gap
     if (isWide) {
-      columnHeights[targetColumn] = y + itemHeight + gap;
-      columnHeights[targetColumn + 1] = y + itemHeight + gap;
+      columnHeights[targetColumn] = y + itemHeight;
+      columnHeights[targetColumn + 1] = y + itemHeight;
     } else {
-      columnHeights[targetColumn] = y + itemHeight + gap;
+      columnHeights[targetColumn] = y + itemHeight;
     }
   });
   
