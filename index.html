@@ -9778,10 +9778,18 @@ function getProgressItemDisplay(status) {
 // 🎯 SAUBERES MASONRY-LAYOUT - FUNKTIONIERT GARANTIERT
 function initCleanMasonry() {
   const container = document.getElementById('masonry-container');
-  if (!container) return;
+  if (!container) {
+    console.log('Masonry: Container nicht gefunden');
+    return;
+  }
   
   const items = Array.from(container.querySelectorAll('.card-category'));
-  if (items.length === 0) return;
+  if (items.length === 0) {
+    console.log('Masonry: Keine Items gefunden');
+    return;
+  }
+  
+  console.log(`Masonry: Starte mit ${items.length} Items für Klasse ${currentClass}`);
   
   // Responsive Spalten
   const containerWidth = container.offsetWidth;
