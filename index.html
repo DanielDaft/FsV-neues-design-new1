@@ -6324,7 +6324,10 @@ function renderStudentDetail(studentId) {
     setupCardViewEventDelegation(student.id);
   }, 100);
   
-  // Masonry initialization removed
+  // Masonry für kompaktes Layout ohne vertikale Lücken
+  setTimeout(() => initCleanMasonry(), 100);
+  setTimeout(() => initCleanMasonry(), 400);
+  setTimeout(() => initCleanMasonry(), 800);
   
   // Theme Toggle nach dem Rendering wieder einfügen
   setTimeout(() => {
