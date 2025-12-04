@@ -9858,21 +9858,13 @@ function getProgressItemDisplay(status) {
       return { symbol: '', statusClass: '' }; // Leer
   }
 }
-// 🎯 SAUBERES MASONRY-LAYOUT - FUNKTIONIERT GARANTIERT
+// Masonry-Layout für kompaktes Stapeln ohne vertikale Lücken
 function initCleanMasonry() {
   const container = document.getElementById('masonry-container');
-  if (!container) {
-    console.log('Masonry: Container nicht gefunden');
-    return;
-  }
+  if (!container) return;
   
   const items = Array.from(container.querySelectorAll('.card-category'));
-  if (items.length === 0) {
-    console.log('Masonry: Keine Items gefunden');
-    return;
-  }
-  
-  console.log(`Masonry: Starte mit ${items.length} Items für Klasse ${currentClass}`);
+  if (items.length === 0) return;
   
   // Responsive Spalten
   const containerWidth = container.offsetWidth;
@@ -9880,49 +9872,17 @@ function initCleanMasonry() {
   if (containerWidth < 1024) columns = 2;
   if (containerWidth < 768) columns = 1;
   
-  const horizontalGap = 20;  // Horizontaler Abstand zwischen Spalten
-  const verticalGap = 0;     // Kein vertikaler Abstand
+  const horizontalGap = 20;
+  const verticalGap = 0;  // Keine vertikalen Abstände
   const columnWidth = (containerWidth - (horizontalGap * (columns - 1))) / columns;
   
   // Spalten-Höhen-Array
   const columnHeights = new Array(columns).fill(0);
   
   // Alle Items positionieren
-  items.forEach((item, index) => {
-    // DEBUG: Mehr Informationen sammeln
-    const computedStyle = window.getComputedStyle(item);
-    const displayValue = computedStyle.display;
-    const visibilityValue = computedStyle.visibility;
-    
-    console.log(`Item ${index} (${item.dataset.category}):`, {
-      display: displayValue,
-      visibility: visibilityValue,
-      offsetHeight: item.offsetHeight,
-      scrollHeight: item.scrollHeight,
-      clientHeight: item.clientHeight,
-      hasChildren: item.children.length,
-      innerHTML_length: item.innerHTML.length,
-      innerHTML_preview: item.innerHTML.substring(0, 200)
-    });
-    
-    // NEUE MESS-STRATEGIE: Item sichtbar machen und Höhe direkt messen
-    item.style.position = 'relative';
-    item.style.visibility = 'visible';
-    item.style.display = 'flex';
-    item.style.width = columnWidth + 'px';
-    item.style.left = '0';
-    item.style.top = '0';
-    item.style.opacity = '1';
-    
-    // Force Reflow für korrekte Höhenmessung
-    void item.offsetHeight;
-    
+  items.forEach((item) => {
     const itemHeight = item.offsetHeight;
-    
-    if (itemHeight === 0) {
-      console.warn(`Masonry: Item ${index} (${item.dataset.category}) hat Höhe 0, überspringe - scrollHeight: ${item.scrollHeight}`);
-      return;
-    }
+    if (itemHeight === 0) return;  // Überspringe leere Items
     let targetColumn = 0;
     let itemWidth = columnWidth;
     
