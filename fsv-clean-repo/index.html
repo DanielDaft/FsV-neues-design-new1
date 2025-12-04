@@ -9053,7 +9053,8 @@ function renderBECategoryHeader(studentId, category, key, percentage, treatedIte
 }
 
 // 🚗 KLASSE-B-SPEZIFISCHE LOGIK (ORIGINAL)
-function renderBCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems) {
+// ALTE B-FUNKTION (nicht mehr verwendet, aber aufbewahrt für Funktionen)
+function renderBCategoryHeader_OLD(studentId, category, key, percentage, treatedItems, totalItems) {
   if (key === 'grundstufe' || key === 'aufbaustufe' || key === 'leistungsstufe' || key === 'grundfahraufgaben') {
     return renderCategoryHeaderWithCircles(studentId, category, key, percentage, treatedItems, totalItems);
   } else if (key === 'uberlandfahrten') {
@@ -9165,7 +9166,9 @@ function renderCategoryHeader(studentId, category, key, percentage, treatedItems
   // 📱 REINER ROUTER - KEINE EIGENE LOGIK!
   switch(currentClass) {
     case 'B':
-      return renderBCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
+      // WICHTIG: B verwendet jetzt die C-Funktion (funktioniert perfekt)
+      // Die alte renderBCategoryHeader bleibt im Code, wird aber nicht mehr verwendet
+      return renderCCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
     case 'A':
     case 'A1': 
     case 'A2':
@@ -9181,8 +9184,8 @@ function renderCategoryHeader(studentId, category, key, percentage, treatedItems
     case 'CE':
       return renderCECategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
     default:
-      // Fallback für unbekannte Klassen - verwende B-Logik
-      return renderBCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
+      // Fallback für unbekannte Klassen - verwende C-Logik
+      return renderCCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems);
   }
 }
 
