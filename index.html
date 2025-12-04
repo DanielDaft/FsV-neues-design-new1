@@ -9053,7 +9053,8 @@ function renderBECategoryHeader(studentId, category, key, percentage, treatedIte
 }
 
 // 🚗 KLASSE-B-SPEZIFISCHE LOGIK (ORIGINAL)
-function renderBCategoryHeader(studentId, category, key, percentage, treatedItems, totalItems) {
+// ALTE B-FUNKTION (nicht mehr verwendet, aber aufbewahrt für Funktionen)
+function renderBCategoryHeader_OLD(studentId, category, key, percentage, treatedItems, totalItems) {
   if (key === 'grundstufe' || key === 'aufbaustufe' || key === 'leistungsstufe' || key === 'grundfahraufgaben') {
     return renderCategoryHeaderWithCircles(studentId, category, key, percentage, treatedItems, totalItems);
   } else if (key === 'uberlandfahrten') {
