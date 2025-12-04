@@ -1789,6 +1789,8 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   border: none;
   position: absolute;
   height: fit-content;
+  width: 400px; /* Fallback width falls Container keine Breite hat */
+  min-width: 300px; /* Mindestbreite für korrekte Darstellung */
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
