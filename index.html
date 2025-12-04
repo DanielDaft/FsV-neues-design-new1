@@ -1773,11 +1773,7 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 }
 /* CSS GRID BASIS + JAVASCRIPT MASONRY */
 .categories-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 0px;
-  align-items: start;
+  position: relative;
   width: 100%;
   margin: 20px 0;
   padding: 0;
@@ -1791,6 +1787,7 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   border-left-style: solid;
   overflow: visible;
   border: none;
+  position: absolute;
   height: fit-content;
   box-sizing: border-box;
   display: flex;
@@ -1803,19 +1800,6 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 .card-category:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .categories-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .categories-container {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ENTFERNT - Ersetzt durch Grid-System
