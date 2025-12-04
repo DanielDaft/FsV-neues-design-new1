@@ -1773,11 +1773,7 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 }
 /* CSS GRID BASIS + JAVASCRIPT MASONRY */
 .categories-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 20px;
-  row-gap: 0px;
-  align-items: start;
+  position: relative;
   width: 100%;
   margin: 20px 0;
   padding: 0;
@@ -1791,6 +1787,7 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   border-left-style: solid;
   overflow: visible;
   border: none;
+  position: absolute;
   height: fit-content;
   box-sizing: border-box;
   display: flex;
@@ -1803,19 +1800,6 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 .card-category:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
-}
-
-/* Responsive */
-@media (max-width: 1024px) {
-  .categories-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .categories-container {
-    grid-template-columns: 1fr;
-  }
 }
 
 /* ENTFERNT - Ersetzt durch Grid-System
@@ -6340,7 +6324,10 @@ function renderStudentDetail(studentId) {
     setupCardViewEventDelegation(student.id);
   }, 100);
   
-  // Masonry initialization removed
+  // Masonry für kompaktes Layout ohne vertikale Lücken
+  setTimeout(() => initCleanMasonry(), 100);
+  setTimeout(() => initCleanMasonry(), 400);
+  setTimeout(() => initCleanMasonry(), 800);
   
   // Theme Toggle nach dem Rendering wieder einfügen
   setTimeout(() => {
@@ -9257,7 +9244,7 @@ function renderCardView(student) {
     'checkliste': '#10B981'             // Türkis
   };
   
-  html += '<div class="categories-container">';
+  html += '<div class="categories-container" id="masonry-container">';
   
   categoryEntries.forEach(([categoryKey, category]) => {
     const color = categoryColors[categoryKey] || '#6B7280'; // Fallback: Grau
@@ -9765,7 +9752,10 @@ function refreshCardView(studentId) {
     // Event Delegation für dynamisch erstellte Kreise einrichten
     setupCardViewEventDelegation(studentId);
     
-    // Masonry initialization removed
+    // Masonry für kompaktes Layout ohne vertikale Lücken
+    setTimeout(() => initCleanMasonry(), 100);
+    setTimeout(() => initCleanMasonry(), 400);
+    setTimeout(() => initCleanMasonry(), 800);
   }
 }
 
@@ -9874,21 +9864,13 @@ function getProgressItemDisplay(status) {
       return { symbol: '', statusClass: '' }; // Leer
   }
 }
-// 🎯 SAUBERES MASONRY-LAYOUT - FUNKTIONIERT GARANTIERT
+// Masonry-Layout für kompaktes Stapeln ohne vertikale Lücken
 function initCleanMasonry() {
   const container = document.getElementById('masonry-container');
-  if (!container) {
-    console.log('Masonry: Container nicht gefunden');
-    return;
-  }
+  if (!container) return;
   
   const items = Array.from(container.querySelectorAll('.card-category'));
-  if (items.length === 0) {
-    console.log('Masonry: Keine Items gefunden');
-    return;
-  }
-  
-  console.log(`Masonry: Starte mit ${items.length} Items für Klasse ${currentClass}`);
+  if (items.length === 0) return;
   
   // Responsive Spalten
   const containerWidth = container.offsetWidth;
@@ -9896,49 +9878,17 @@ function initCleanMasonry() {
   if (containerWidth < 1024) columns = 2;
   if (containerWidth < 768) columns = 1;
   
-  const horizontalGap = 20;  // Horizontaler Abstand zwischen Spalten
-  const verticalGap = 0;     // Kein vertikaler Abstand
+  const horizontalGap = 20;
+  const verticalGap = 0;  // Keine vertikalen Abstände
   const columnWidth = (containerWidth - (horizontalGap * (columns - 1))) / columns;
   
   // Spalten-Höhen-Array
   const columnHeights = new Array(columns).fill(0);
   
   // Alle Items positionieren
-  items.forEach((item, index) => {
-    // DEBUG: Mehr Informationen sammeln
-    const computedStyle = window.getComputedStyle(item);
-    const displayValue = computedStyle.display;
-    const visibilityValue = computedStyle.visibility;
-    
-    console.log(`Item ${index} (${item.dataset.category}):`, {
-      display: displayValue,
-      visibility: visibilityValue,
-      offsetHeight: item.offsetHeight,
-      scrollHeight: item.scrollHeight,
-      clientHeight: item.clientHeight,
-      hasChildren: item.children.length,
-      innerHTML_length: item.innerHTML.length,
-      innerHTML_preview: item.innerHTML.substring(0, 200)
-    });
-    
-    // NEUE MESS-STRATEGIE: Item sichtbar machen und Höhe direkt messen
-    item.style.position = 'relative';
-    item.style.visibility = 'visible';
-    item.style.display = 'flex';
-    item.style.width = columnWidth + 'px';
-    item.style.left = '0';
-    item.style.top = '0';
-    item.style.opacity = '1';
-    
-    // Force Reflow für korrekte Höhenmessung
-    void item.offsetHeight;
-    
+  items.forEach((item) => {
     const itemHeight = item.offsetHeight;
-    
-    if (itemHeight === 0) {
-      console.warn(`Masonry: Item ${index} (${item.dataset.category}) hat Höhe 0, überspringe - scrollHeight: ${item.scrollHeight}`);
-      return;
-    }
+    if (itemHeight === 0) return;  // Überspringe leere Items
     let targetColumn = 0;
     let itemWidth = columnWidth;
     
@@ -9987,13 +9937,14 @@ function initCleanMasonry() {
   });
   
   // Container-Höhe
-  const maxHeight = Math.max(...columnHeights);
-  container.style.height = maxHeight + 'px';
-  
-  console.log(`Masonry: Fertig! Container-Höhe: ${maxHeight}px, ${columns} Spalten`);
+  container.style.height = Math.max(...columnHeights) + 'px';
 }
 
-// Resize handler for masonry removed
+// Masonry bei Fenster-Resize neu berechnen
+window.addEventListener('resize', () => {
+  clearTimeout(window.masonryTimeout);
+  window.masonryTimeout = setTimeout(initCleanMasonry, 300);
+});
 
 
 
