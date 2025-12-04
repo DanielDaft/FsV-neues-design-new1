@@ -9752,7 +9752,10 @@ function refreshCardView(studentId) {
     // Event Delegation für dynamisch erstellte Kreise einrichten
     setupCardViewEventDelegation(studentId);
     
-    // Masonry initialization removed
+    // Masonry für kompaktes Layout ohne vertikale Lücken
+    setTimeout(() => initCleanMasonry(), 100);
+    setTimeout(() => initCleanMasonry(), 400);
+    setTimeout(() => initCleanMasonry(), 800);
   }
 }
 
