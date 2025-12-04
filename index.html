@@ -1773,12 +1773,14 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 }
 /* CSS GRID BASIS + JAVASCRIPT MASONRY */
 .categories-container {
-  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: start;
   width: 100%;
   margin: 20px 0;
   padding: 0;
   box-sizing: border-box;
-  /* Höhe wird durch JavaScript gesetzt */
 }
 
 .card-category {
@@ -1788,9 +1790,6 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   border-left-style: solid;
   overflow: visible;
   border: none;
-  /* JAVASCRIPT MASONRY POSITIONING */
-  position: absolute;
-  width: calc(33.333% - 14px); /* 3 Spalten */
   height: fit-content;
   box-sizing: border-box;
   display: flex;
@@ -1806,23 +1805,27 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 
 /* 2-Spalten-Breite für Grundfahraufgaben */
 .card-category[data-category="grundfahraufgaben"] { 
-  width: calc(66.666% - 10px); /* 2 Spalten */
+  grid-column: span 2;
 }
 
-/* Responsive wird durch JavaScript behandelt */
+/* Responsive Grid */
 @media (max-width: 1024px) {
-  .card-category {
-    width: calc(50% - 8px) !important; /* 2 Spalten */
+  .categories-container {
+    grid-template-columns: repeat(2, 1fr);
   }
   
   .card-category[data-category="grundfahraufgaben"] { 
-    width: calc(100% - 0px) !important; /* Volle Breite */
+    grid-column: span 2;
   }
 }
 
 @media (max-width: 768px) {
-  .card-category { 
-    width: 100% !important; /* 1 Spalte */
+  .categories-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .card-category[data-category="grundfahraufgaben"] { 
+    grid-column: span 1;
   }
 }
 
