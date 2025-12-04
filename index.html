@@ -9832,6 +9832,24 @@ function initCleanMasonry() {
     // 2-Spalten für Grundfahraufgaben
     const isWide = item.dataset.category === 'grundfahraufgaben' && columns >= 2;
     if (isWide) {
+      itemWidth = (columnWidth * 2) + horizontalGap;
+    }
+    
+    // Setze Width SOFORT, damit das Element seine Höhe berechnen kann
+    item.style.width = itemWidth + 'px';
+    item.style.position = 'absolute';
+    
+    // JETZT können wir die Höhe messen
+    const itemHeight = item.offsetHeight;
+    
+    // Überspringe nur Items die trotz Width noch keine Höhe haben
+    if (itemHeight === 0) {
+      console.warn(`⚠️ Item ${index} hat trotz Width=${itemWidth}px keine Höhe!`, item);
+      return;
+    }
+    
+    // Finde die beste Spalte für dieses Item
+    if (isWide) {
       // Finde beste 2-Spalten Position
       let minHeight = Infinity;
       for (let i = 0; i < columns - 1; i++) {
@@ -9841,7 +9859,6 @@ function initCleanMasonry() {
           targetColumn = i;
         }
       }
-      itemWidth = (columnWidth * 2) + horizontalGap;
     } else {
       // Finde kürzeste Spalte
       let minHeight = columnHeights[0];
@@ -9858,10 +9875,8 @@ function initCleanMasonry() {
     const y = isWide ? Math.max(columnHeights[targetColumn], columnHeights[targetColumn + 1]) : columnHeights[targetColumn];
     
     // Item positionieren
-    item.style.position = 'absolute';
     item.style.left = x + 'px';
     item.style.top = y + 'px';
-    item.style.width = itemWidth + 'px';
     item.style.visibility = 'visible';
     
     // Spalten aktualisieren - OHNE vertikalen Gap
