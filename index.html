@@ -6240,6 +6240,12 @@ function renderStudentDetail(studentId) {
     setupCardViewEventDelegation(student.id);
   }, 100);
   
+  // MASONRY FÜR KARTENANSICHT INITIALISIEREN
+  setTimeout(() => initCleanMasonry(), 150);
+  setTimeout(() => initCleanMasonry(), 400);
+  setTimeout(() => initCleanMasonry(), 800);
+  setTimeout(() => initCleanMasonry(), 1200);
+  
   // Theme Toggle nach dem Rendering wieder einfügen
   setTimeout(() => {
     ThemeManager.createToggleButton();
