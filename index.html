@@ -1832,23 +1832,6 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
 /* ENTFERNT - Ersetzt durch Grid-System
    Alte Flexbox-Layouts sind nicht mehr nötig */
 
-.card-row-situative {
-  /* Situative Bausteine - Viele kleine kompakte Boxen wie im Bild */
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px; /* Sehr kleine Abstände */
-  align-items: flex-start;
-}
-
-.card-row-situative .card-category {
-  /* Jede Box nimmt 1/6 der Breite für 6 Spalten */
-  flex: 0 1 calc(16.666% - 3px);
-  min-width: calc(16.666% - 3px);
-  margin-bottom: 4px;
-  min-height: auto;
-}
-}
-
 .card-column {
   flex: 1;
   display: flex;
@@ -1859,30 +1842,6 @@ border-left-color: #06B6D4 !important; /* Türkis - Checkliste */
   /* Kompakte Darstellung für blaue Boxen */
   min-width: 250px;
   max-width: none;
-}
-
-.card-category {
-  background: var(--bg-secondary);
-  border-radius: 12px;
-  border-left-width: 6px;
-  border-left-style: solid;
-  overflow: visible;
-  border: none;
-  /* OPTIMIERT FÜR GRID-LAYOUT */
-  height: fit-content; /* Natürliche Höhe basierend auf Inhalt */
-  min-height: auto;
-  width: 100%; /* Volle Breite der Grid-Zelle */
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  /* Sanfte Schatten für bessere Abgrenzung */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.card-category:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
 }
 
 .card-header {
